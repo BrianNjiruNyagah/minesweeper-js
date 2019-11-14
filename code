@@ -1,0 +1,156 @@
+function minesweeper(matrix) {
+    var array = [];
+    var arrayRow = [];
+    //counts to ensure that every element has been touched
+    var timer = 0;
+    var rowCount = 0;
+    while(timer<matrix.length){
+        var columnCount = 0;
+        for(var row = 0;row<matrix[0].length;row++){    
+            var count = 0;
+            //top shelf
+            if(rowCount == 0){
+                //first value
+                 if(columnCount == 0 && rowCount == 0){
+                    count += right(matrix,rowCount,columnCount);
+                    count += down(matrix,rowCount,columnCount);
+                    count += downRight(matrix,rowCount,columnCount);
+                 }
+                //middle values
+                 if(columnCount > 0 && columnCount != matrix[0].length-1){
+                     count+= right(matrix,rowCount,columnCount);
+                     count+= left(matrix,rowCount,columnCount);
+                     count += down(matrix,rowCount,columnCount);
+                     count += downRight(matrix,rowCount,columnCount);
+                     count += downLeft(matrix,rowCount,columnCount);
+                 }
+                //last value
+                if(columnCount==matrix[0].length-1){
+                    count += left(matrix,rowCount,columnCount);
+                    count += down(matrix,rowCount,columnCount);
+                    count += downLeft(matrix,rowCount,columnCount);                           
+                }
+            }  
+            //middle shelf
+            if(rowCount > 0 && rowCount != matrix.length-1){
+                //first value
+                if(columnCount == 0 ){
+                    count += up(matrix,rowCount,columnCount);
+                    count += upRight(matrix,rowCount,columnCount);
+                    count += right(matrix,rowCount,columnCount);
+                    count += down(matrix,rowCount,columnCount);
+                    count += downRight(matrix,rowCount,columnCount);
+                }
+                //middle values
+                if(columnCount > 0 && columnCount != matrix[0].length-1){
+                    count += up(matrix,rowCount,columnCount);
+                    count += upRight(matrix,rowCount,columnCount);
+                    count += upLeft(matrix,rowCount,columnCount);
+                    count += right(matrix,rowCount,columnCount);
+                    count += left(matrix,rowCount,columnCount);
+                    count += down(matrix,rowCount,columnCount);
+                    count += downRight(matrix,rowCount,columnCount);
+                    count += downLeft(matrix,rowCount,columnCount);
+                }
+                //last value
+                if(columnCount == matrix[0].length-1){
+                    count += up(matrix,rowCount,columnCount);
+                    count += upLeft(matrix,rowCount,columnCount);
+                    count += left(matrix,rowCount,columnCount);
+                    count += down(matrix,rowCount,columnCount);
+                    count += downLeft(matrix,rowCount,columnCount);
+                }
+            }
+            //final shelf
+            if(rowCount == matrix.length-1){
+                //first value
+                if(columnCount == 0){
+                    count += up(matrix,rowCount,columnCount);
+                    count += upRight(matrix,rowCount,columnCount);
+                    count += right(matrix,rowCount,columnCount);
+                }
+                //middle values
+                if(columnCount > 0 && columnCount!= matrix[0].length -1){
+                    count += up(matrix,rowCount,columnCount);
+                    count += upRight(matrix,rowCount,columnCount);
+                    count += upLeft(matrix,rowCount,columnCount);
+                    count += right(matrix,rowCount,columnCount);
+                    count += left(matrix,rowCount,columnCount);                    
+                }
+                //last values
+                if(columnCount == matrix[0].length-1){
+                    count += up(matrix,rowCount,columnCount);
+                    count += upLeft(matrix,rowCount,columnCount);
+                    count += left(matrix,rowCount,columnCount);
+                }
+            }
+        arrayRow.push(count);
+        columnCount++;
+        }
+        array.push(arrayRow)
+        arrayRow=[];
+        rowCount++;
+        timer++;
+    }
+    return array;
+}
+//directions
+function right(matrix,rowCount,columnCount){
+    var captureArray = matrix[rowCount];
+    if(captureArray[columnCount+1]){
+        return 1;
+    }
+    return 0;
+}
+function left(matrix,rowCount,columnCount){
+    var captureArray = matrix[rowCount];
+    if(captureArray[columnCount-1]){
+        return 1;
+    }
+    return 0;
+}
+function up(matrix,rowCount,columnCount){
+    var captureArray = matrix[rowCount-1];
+    if(captureArray[columnCount]){
+        return 1;
+    }
+    return 0;
+}
+function upRight(matrix,rowCount,columnCount){
+    var captureArray = matrix[rowCount-1];
+    if(captureArray[columnCount+1]){
+        return 1;
+    }
+    return 0;
+}
+function upLeft(matrix,rowCount,columnCount){
+    var captureArray = matrix[rowCount-1];
+    if(captureArray[columnCount-1]){
+        return 1;
+    }
+    return 0;
+}
+function down(matrix,rowCount,columnCount){
+    var captureArray = matrix[rowCount+1]; 
+    if(captureArray[columnCount]){
+        return 1;
+    }
+    return 0;
+}
+function downRight(matrix,rowCount,columnCount){
+    var captureArray = matrix[rowCount+1];
+    if(captureArray[columnCount+1]){
+        return 1;
+    }
+    return 0;
+}
+function downLeft(matrix,rowCount,columnCount){
+    var captureArray = matrix[rowCount+1];
+    if(captureArray[columnCount-1]){
+        return 1;
+    }
+    return 0;
+}
+        
+       
+
